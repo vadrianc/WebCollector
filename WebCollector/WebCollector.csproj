@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Actions\CollectTag.cs" />
     <Compile Include="Actions\NavigateAction.cs" />
+    <Compile Include="Actions\WaitAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
@@ -56,6 +57,10 @@
     <ProjectReference Include="..\..\SoftwareController\SoftwareControllerApi\SoftwareControllerApi.csproj">
       <Project>{E673B825-BB7F-48AF-A5E6-76B9D8059CFB}</Project>
       <Name>SoftwareControllerApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SoftwareController\SoftwareControllerLib\SoftwareControllerLib.csproj">
+      <Project>{05289618-5F5F-46BF-BB82-CEFD8C546B65}</Project>
+      <Name>SoftwareControllerLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
