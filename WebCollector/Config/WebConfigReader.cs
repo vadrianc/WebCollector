@@ -1,6 +1,9 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
+using SoftwareControllerApi.Action;
 using SoftwareControllerApi.Rule;
 using SoftwareControllerLib.Config;
+using WebCollector.Actions;
 
 namespace WebCollector.Config
 {
@@ -26,24 +29,17 @@ namespace WebCollector.Config
 
             string name = string.Empty;
             string address = string.Empty;
+            string startAddress = string.Empty;
 
             XmlReader settingsReader = m_Reader.ReadSubtree();
 
             while (settingsReader.Read()) {
-                if (settingsReader.Name.Equals("name")) {
-                    settingsReader.Read();
-                    if (settingsReader.NodeType == XmlNodeType.Text) {
-                        name = settingsReader.Value;
-                    }
-                } else if (settingsReader.Name.Equals("address")) {
-                    settingsReader.Read();
-                    if (settingsReader.NodeType == XmlNodeType.Text) {
-                        address = settingsReader.Value;
-                    }
-                }
+                if (string.IsNullOrEmpty(name) && ReadNodeValue(settingsReader, out name)) continue;
+                if (string.IsNullOrEmpty(address) && ReadNodeValue(settingsReader, out address)) continue;
+                if (string.IsNullOrEmpty(startAddress) && ReadNodeValue(settingsReader, out startAddress)) continue;
             }
 
-            m_Session = new WebCollectorSession(name, address);
+            m_Session = new WebCollectorSession(name, address, startAddress);
         }
 
         /// <summary>
@@ -53,7 +49,83 @@ namespace WebCollector.Config
         /// <param name="rule">The rule where to add the parsed actions.</param>
         protected override void ReadActions(XmlReader ruleReader, IRule rule)
         {
-           
+            while (ruleReader.Read()) {
+                if (ruleReader.NodeType == XmlNodeType.Element && ruleReader.Name.Equals("action")) {
+                    string typeStr = ruleReader.GetAttribute("type");
+                    ActionType type;
+
+                    if (!Enum.TryParse(typeStr.ToUpper(), out type)) continue;
+
+                    XmlReader actionReader = ruleReader.ReadSubtree();
+
+                    switch (type) {
+                    case ActionType.NAVIGATE: {
+                            NavigateAction action = new NavigateAction();
+                            ReadTagAction(actionReader, rule, action);
+                        }
+                        break;
+
+                    case ActionType.COLLECT: {
+                            CollectAction action = new CollectAction();
+                            ReadTagAction(actionReader, rule, action);
+                        }
+                        break;
+
+                    case ActionType.WAIT:
+                        ReadWaitAction(actionReader, rule);
+                        break;
+
+                    case ActionType.CLICK:
+                    case ActionType.TYPE:
+                        throw new XmlException(string.Format("Unsupported action type: {0}", type.ToString()));
+
+                    default:
+                        throw new XmlException(string.Format("Unknown action type: {0}", type.ToString()));
+                    }
+                }
+            }
+        }
+
+        private void ReadTagAction<T>(XmlReader reader, IRule rule, T action) where T : TagActionBase
+        {
+            string tag = string.Empty;
+            string cls = string.Empty;
+
+            while (reader.Read()) {
+                if (string.IsNullOrEmpty(tag) && ReadNodeValue(reader, out tag)) continue;
+                if (string.IsNullOrEmpty(cls) && ReadNodeValue(reader, out cls)) continue;
+            }
+
+            action.Tag = tag;
+            action.Class = cls;
+
+            rule.AddAction(action);
+        }
+
+        private void ReadWaitAction(XmlReader reader, IRule rule)
+        {
+            string min = string.Empty;
+            string max = string.Empty;
+
+            while (reader.Read()) {
+                if (string.IsNullOrEmpty(min) && ReadNodeValue(reader, out min)) continue;
+                if (string.IsNullOrEmpty(max) && ReadNodeValue(reader, out max)) continue;
+            }
+
+            WaitAction action = new WaitAction(int.Parse(min), int.Parse(max));
+            rule.AddAction(action);
+        }
+
+        private bool ReadNodeValue(XmlReader reader, out string output)
+        {
+            output = string.Empty;
+
+            if (reader.NodeType == XmlNodeType.Text) {
+                output = reader.Value;
+                return true;
+            }
+
+            return false;
         }
     }
 }
