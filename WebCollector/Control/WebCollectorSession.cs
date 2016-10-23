@@ -36,5 +36,15 @@ namespace WebCollector
             get;
             private set;
         }
+
+
+        /// <summary>
+        /// The HTML of the current page.
+        /// </summary>
+        public string Html
+        {
+            get;
+            set;
+        }
     }
 }

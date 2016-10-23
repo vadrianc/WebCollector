@@ -8,9 +8,18 @@ namespace WebCollector.Actions
     public abstract class TagActionBase : IAction
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TagActionBase"/> class with the given session.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        public TagActionBase(WebCollectorSession session)
+        {
+            Session = session;
+        }
+
+        /// <summary>
         /// The HTML tag.
         /// </summary>
-        public string Tag
+        public virtual string Tag
         {
             get;
             set;
@@ -19,7 +28,7 @@ namespace WebCollector.Actions
         /// <summary>
         /// The class of the HTML tag.
         /// </summary>
-        public string Class
+        public virtual string Class
         {
             get;
             set;
@@ -32,6 +41,15 @@ namespace WebCollector.Actions
         {
             get;
             protected set;
+        }
+
+        /// <summary>
+        /// The session.
+        /// </summary>
+        public WebCollectorSession Session
+        {
+            get;
+            set;
         }
 
         /// <summary>

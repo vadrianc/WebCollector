@@ -60,13 +60,13 @@ namespace WebCollector.Config
 
                     switch (type) {
                     case ActionType.NAVIGATE: {
-                            NavigateAction action = new NavigateAction();
+                            NavigateAction action = new NavigateAction(m_Session);
                             ReadTagAction(actionReader, rule, action);
                         }
                         break;
 
                     case ActionType.COLLECT: {
-                            CollectAction action = new CollectAction();
+                            CollectAction action = new CollectAction(m_Session);
                             ReadTagAction(actionReader, rule, action);
                         }
                         break;
