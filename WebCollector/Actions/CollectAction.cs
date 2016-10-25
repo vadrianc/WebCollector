@@ -1,5 +1,4 @@
-﻿using System;
-using SoftwareControllerApi.Action;
+﻿using SoftwareControllerApi.Action;
 using SoftwareControllerLib.Action;
 
 namespace WebCollector.Actions
