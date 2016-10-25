@@ -1,4 +1,5 @@
 ﻿using SoftwareControllerLib.Control;
+using WebCollector.Utils;
 
 namespace WebCollector
 {
@@ -7,6 +8,8 @@ namespace WebCollector
     /// </summary>
     public class WebCollectorSession : Session
     {
+        private string m_Html;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WebCollectorSession"/> class using the given name and web address.
         /// </summary>
@@ -43,8 +46,14 @@ namespace WebCollector
         /// </summary>
         public string Html
         {
-            get;
-            set;
+            get
+            {
+                if (string.IsNullOrEmpty(m_Html)) {
+                    m_Html = HtmlUtils.GetHtmlString(StartAddress);
+                }
+
+                return m_Html;
+            }
         }
     }
 }

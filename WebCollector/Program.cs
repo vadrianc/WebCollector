@@ -16,7 +16,6 @@ namespace WebCollector
                 WebConfigReader reader = new WebConfigReader("default.xml");
                 WebCollectorSession session = reader.Read();
 
-                session.Html = HtmlUtils.GetHtmlString(session.StartAddress);
                 session.Run();
             } catch (WebException ex) {
                 Console.WriteLine(ex.Message);
