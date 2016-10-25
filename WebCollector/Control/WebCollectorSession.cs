@@ -46,14 +46,8 @@ namespace WebCollector
         /// </summary>
         public string Html
         {
-            get
-            {
-                if (string.IsNullOrEmpty(m_Html)) {
-                    m_Html = HtmlUtils.GetHtmlString(StartAddress);
-                }
-
-                return m_Html;
-            }
+            get;
+            set;
         }
     }
 }

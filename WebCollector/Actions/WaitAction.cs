@@ -2,6 +2,7 @@
 using System.Threading;
 using SoftwareControllerApi.Action;
 using SoftwareControllerLib.Action;
+using SoftwareControllerLib.Utils;
 
 namespace WebCollector.Actions
 {
@@ -84,6 +85,7 @@ namespace WebCollector.Actions
         public IResult Execute()
         {
             Milliseconds = m_Rand.Next(Minimum, Maximum);
+            ConsoleOutput.Instance.Message(string.Format("Waiting for {0} ms", Milliseconds));
             Thread.Sleep(Milliseconds);
 
             return new Result(null, ActionState.SUCCESS);

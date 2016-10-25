@@ -1,6 +1,8 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using SoftwareControllerApi.Action;
 using SoftwareControllerLib.Action;
+using SoftwareControllerLib.Utils;
 using WebCollector.Utils;
 
 namespace WebCollector.Actions
@@ -57,6 +59,9 @@ namespace WebCollector.Actions
         {
             if (!FindNextLink()) return new Result(null, ActionState.FAIL);
             string html = HtmlUtils.GetHtmlString(Link);
+            Session.Html = html;
+
+            ConsoleOutput.Instance.Message(string.Format("Navigated to {0}", Link));
 
             return new Result(html, ActionState.SUCCESS);
         }

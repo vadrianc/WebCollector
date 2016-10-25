@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using SoftwareControllerLib.Utils;
 using WebCollector.Config;
 using WebCollector.Utils;
 
@@ -8,23 +9,25 @@ namespace WebCollector
     /// <summary>
     /// Main program class.
     /// </summary>
-    class Program
+    static class Program
     {
         static void Main()
         {
             try {
                 WebConfigReader reader = new WebConfigReader("default.xml");
                 WebCollectorSession session = reader.Read();
+                session.Html = HtmlUtils.GetHtmlString(session.StartAddress);
+                ConsoleOutput.Instance.Message(string.Format("Navigated to {0}", session.StartAddress));
 
-                session.Run();
+                session.RunUntilFailure();
             } catch (WebException ex) {
-                Console.WriteLine(ex.Message);
+                ConsoleOutput.Instance.Error(ex.Message);
             } catch (Exception ex) {
-                Console.WriteLine("Fatal exception");
-                Console.WriteLine(ex.Message);
+                ConsoleOutput.Instance.Error("Fatal exception");
+                ConsoleOutput.Instance.Error(ex.Message);
             } finally {
-                Console.WriteLine();
-                Console.WriteLine("Press any key to exit ...");
+                ConsoleOutput.Instance.Message(string.Empty);
+                ConsoleOutput.Instance.Message("Press any key to exit ...");
                 Console.ReadKey();
             }
         }
