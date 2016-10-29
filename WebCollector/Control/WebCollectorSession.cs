@@ -1,5 +1,4 @@
 ﻿using SoftwareControllerLib.Control;
-using WebCollector.Utils;
 
 namespace WebCollector
 {
