@@ -1,11 +1,11 @@
-﻿using System;
-using System.Net;
-using SoftwareControllerLib.Utils;
-using WebCollector.Config;
-using WebCollector.Utils;
-
-namespace WebCollector
+﻿namespace WebCollector
 {
+    using System;
+    using System.Net;
+    using Config;
+    using SoftwareControllerLib.Utils;
+    using Utils;
+
     /// <summary>
     /// Main program class.
     /// </summary>

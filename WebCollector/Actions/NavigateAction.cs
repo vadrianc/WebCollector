@@ -1,11 +1,11 @@
-﻿using System.Text.RegularExpressions;
-using SoftwareControllerApi.Action;
-using SoftwareControllerLib.Action;
-using SoftwareControllerLib.Utils;
-using WebCollector.Utils;
-
-namespace WebCollector.Actions
+﻿namespace WebCollector.Actions
 {
+    using System.Text.RegularExpressions;
+    using SoftwareControllerApi.Action;
+    using SoftwareControllerLib.Action;
+    using SoftwareControllerLib.Utils;
+    using Utils;
+
     /// <summary>
     /// Action for navigating to a web page.
     /// </summary>

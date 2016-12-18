@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Net;
-
-namespace WebCollector.Utils
+﻿namespace WebCollector.Utils
 {
+    using System;
+    using System.IO;
+    using System.Net;
+
     /// <summary>
     /// Exposes utility methods for working with HTML.
     /// </summary>

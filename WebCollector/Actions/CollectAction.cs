@@ -1,8 +1,8 @@
-﻿using SoftwareControllerApi.Action;
-using SoftwareControllerLib.Action;
-
-namespace WebCollector.Actions
+﻿namespace WebCollector.Actions
 {
+    using SoftwareControllerApi.Action;
+    using SoftwareControllerLib.Action;
+
     /// <summary>
     /// Action for collecting the content of a tag.
     /// </summary>

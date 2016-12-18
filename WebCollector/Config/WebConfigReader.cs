@@ -1,12 +1,12 @@
-﻿using System;
-using System.Xml;
-using SoftwareControllerApi.Action;
-using SoftwareControllerApi.Rule;
-using SoftwareControllerLib.Config;
-using WebCollector.Actions;
-
-namespace WebCollector.Config
+﻿namespace WebCollector.Config
 {
+    using System;
+    using System.Xml;
+    using Actions;
+    using SoftwareControllerApi.Action;
+    using SoftwareControllerApi.Rule;
+    using SoftwareControllerLib.Config;
+
     /// <summary>
     /// Web specific configuration reader class.
     /// </summary>

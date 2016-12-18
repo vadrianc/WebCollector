@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading;
-using SoftwareControllerApi.Action;
-using SoftwareControllerLib.Action;
-using SoftwareControllerLib.Utils;
-
-namespace WebCollector.Actions
+﻿namespace WebCollector.Actions
 {
+    using System;
+    using System.Threading;
+    using SoftwareControllerApi.Action;
+    using SoftwareControllerLib.Action;
+    using SoftwareControllerLib.Utils;
+
     /// <summary>
     /// Pauses the current thread for a random amount of time generated within the given limits.
     /// </summary>

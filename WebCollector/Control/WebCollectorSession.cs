@@ -1,7 +1,7 @@
-﻿using SoftwareControllerLib.Control;
-
-namespace WebCollector
+﻿namespace WebCollector
 {
+    using SoftwareControllerLib.Control;
+
     /// <summary>
     /// The Web Collector session.
     /// </summary>

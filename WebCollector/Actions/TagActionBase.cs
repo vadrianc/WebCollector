@@ -1,7 +1,7 @@
-﻿using SoftwareControllerApi.Action;
-
-namespace WebCollector.Actions
+﻿namespace WebCollector.Actions
 {
+    using SoftwareControllerApi.Action;
+
     /// <summary>
     /// Base class for defining an action related to a single HTML tag.
     /// </summary>
