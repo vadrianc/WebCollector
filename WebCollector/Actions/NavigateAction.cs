@@ -25,6 +25,15 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="NavigateAction"/> class with the given session.
+        /// </summary>
+        /// <param name="name">The name of the action.</param>
+        /// <param name="session">The session.</param>
+        public NavigateAction(string name, WebCollectorSession session) : base(name, session)
+        {
+        }
+
+        /// <summary>
         /// Get the link to navigate to.
         /// </summary>
         public string Link
