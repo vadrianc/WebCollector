@@ -21,6 +21,7 @@
         /// <summary>
         /// Read the session settings from the XML configuration file.
         /// </summary>
+        /// <exception cref="XmlException"><settings> tag not was not found.</exception>
         protected override void InitSession()
         {
             if (!m_Reader.ReadToFollowing("settings")) {
@@ -47,6 +48,7 @@
         /// </summary>
         /// <param name="ruleReader">The XML reader for the rule.</param>
         /// <param name="rule">The rule where to add the parsed actions.</param>
+        /// <exception cref="XmlException">"Unsupported action type found.</exception>
         protected override void ReadActions(XmlReader ruleReader, IRule rule)
         {
             while (ruleReader.Read()) {
