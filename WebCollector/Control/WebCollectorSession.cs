@@ -1,5 +1,6 @@
 ﻿namespace WebCollector
 {
+    using System;
     using SoftwareControllerLib.Control;
 
     /// <summary>
@@ -7,8 +8,6 @@
     /// </summary>
     public class WebCollectorSession : Session
     {
-        private string m_Html;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="WebCollectorSession"/> class using the given name and web address.
         /// </summary>
@@ -17,6 +16,11 @@
         /// <param name="startAddress">The first web address to navigate to.</param>
         public WebCollectorSession(string name, string address, string startAddress) : base(name)
         {
+            if (address == null) throw new ArgumentNullException("address");
+            if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Cannot be empty or white space only", "address");
+            if (startAddress == null) throw new ArgumentNullException("startAddress");
+            if (string.IsNullOrWhiteSpace(startAddress)) throw new ArgumentException("Cannot be empty or white space only", "startAddress");
+
             Address = address;
             StartAddress = startAddress;
         }
