@@ -18,6 +18,12 @@
         /// </summary>
         /// <param name="min">The minimum number of milliseconds to wait for.</param>
         /// <param name="max">The maximum number of milliseconds to wait for.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is less than zero
+        /// or
+        /// <paramref name="max"/> is less than zero
+        /// </exception>
+        /// <exception cref="ArgumentException"><paramref name="min"/> is greater than <paramref name="max"/></exception>
         public WaitAction(int min, int max)
         {
             if (min < 0) throw new ArgumentOutOfRangeException("min", "Cannot be a negative number");
@@ -34,6 +40,8 @@
         /// <param name="name">The name of the wait action.</param>
         /// <param name="min">The minimum number of milliseconds to wait for.</param>
         /// <param name="max">The maximum number of milliseconds to wait for.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty of whitespace only.</exception>
         public WaitAction(string name, int min, int max) : this(min, max)
         {
             if (name == null) throw new ArgumentNullException("name", "Cannot be null");
