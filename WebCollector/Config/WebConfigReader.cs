@@ -21,7 +21,7 @@
         /// <summary>
         /// Read the session settings from the XML configuration file.
         /// </summary>
-        /// <exception cref="XmlException"><settings> tag not was not found.</exception>
+        /// <exception cref="XmlException"><settings> tag was not found.</exception>
         protected override void InitSession()
         {
             if (!m_Reader.ReadToFollowing("settings")) {
