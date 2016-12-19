@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<scraper>
+  <settings>
+    <name>YellowPages scraper</name>
+    <address>http://www.yellowpages.com</address>
+    <start>http://www.yellowpages.com/search?search_terms=supermarket&amp;geo_location_terms=Washington%2C%20DC</start>
+  </settings>
+  <automaton>
+    <rule name="collect_rule">
+      <!-- The inexistent action type. -->
+      <action type="click"> 
+        <tag>a</tag>
+        <class>business-name</class>
+      </action>
+    </rule>
+  </automaton>
+</scraper>
