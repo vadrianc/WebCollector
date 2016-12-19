@@ -14,6 +14,16 @@
         /// <param name="name">The name of the web collector session.</param>
         /// <param name="address">The web address.</param>
         /// <param name="startAddress">The first web address to navigate to.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="address"/> is null
+        /// or
+        /// <paramref name="startAddress"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="address"/> is empty or whitespace only
+        /// or
+        /// <paramref name="startAddress"/> is empty or whitespace only.
+        /// </exception>
         public WebCollectorSession(string name, string address, string startAddress) : base(name)
         {
             if (address == null) throw new ArgumentNullException("address");
