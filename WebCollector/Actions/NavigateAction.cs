@@ -65,13 +65,13 @@
         /// <returns>The result of the navigation action.</returns>
         public override IResult Execute()
         {
-            if (!FindNextLink()) return new Result(null, ActionState.FAIL);
+            if (!FindNextLink()) return new Result(ActionState.FAIL);
             string html = HtmlUtils.GetHtmlString(Link);
             Session.Html = html;
 
             ConsoleOutput.Instance.Message(string.Format("Navigated to {0}", Link));
 
-            return new Result(html, ActionState.SUCCESS);
+            return new Result(ActionState.SUCCESS);
         }
 
         private bool FindNextLink()

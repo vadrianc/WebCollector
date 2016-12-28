@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\CollectAction.cs" />
+    <Compile Include="Actions\Collect\TagCollectAction.cs" />
+    <Compile Include="Actions\Collect\ItemBase.cs" />
+    <Compile Include="Actions\Collect\TextItem.cs" />
     <Compile Include="Actions\NavigateAction.cs" />
     <Compile Include="Actions\TagActionBase.cs" />
     <Compile Include="Actions\WaitAction.cs" />

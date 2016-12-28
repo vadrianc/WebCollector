@@ -68,7 +68,7 @@
                         break;
 
                     case ActionType.COLLECT: {
-                            CollectAction action = new CollectAction(m_Session);
+                            TagCollectAction action = new TagCollectAction(m_Session, true);
                             ReadTagAction(actionReader, rule, action);
                         }
                         break;
