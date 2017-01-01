@@ -1,8 +1,14 @@
 ﻿namespace WebCollectorTest.Control
 {
     using System;
+    using System.IO;
     using NUnit.Framework;
+    using SoftwareControllerApi.Action;
+    using SoftwareControllerLib;
+    using SoftwareControllerLib.Action;
     using WebCollector;
+    using WebCollector.Actions;
+    using WebCollector.Config;
 
     [TestFixture]
     public class WebCollectorSessionTest
@@ -47,6 +53,35 @@
 
             Assert.That(session.Address, Is.EqualTo("http://www.yellowpages.com"));
             Assert.That(session.StartAddress, Is.EqualTo("http://www.yellowpages.com/search?search_terms=supermarket&amp;geo_location_terms=Washington%2C%20DC"));
+        }
+
+        [Test]
+        [Category("WebCollectorSession")]
+        public void RunYellowPagesSessionAndFail()
+        {
+            WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));
+            WebCollectorSession session = reader.Read();
+
+            using (StreamReader sr = new StreamReader(Path.Combine("Resources", "yellowpages_sample.html"))) {
+                session.Html = sr.ReadToEnd();
+
+                IResult result = session.RunUntilFailure();
+                Assert.That(result.State, Is.EqualTo(ActionState.FAIL));
+                Assert.That(result, Is.InstanceOf<MultiResult>());
+                MultiResult multiResult = result as MultiResult;
+                Assert.That(multiResult.Results.Count, Is.EqualTo(30));
+
+                Assert.That(session.Address, Is.EqualTo("http://www.yellowpages.com"));
+                Assert.That(session.StartAddress, Is.EqualTo("http://www.yellowpages.com/search?search_terms=supermarket&geo_location_terms=Washington%2C%20DC"));
+                Assert.That(session.Rules.Count, Is.EqualTo(2));
+                Assert.That(session.Rules[0], Is.InstanceOf<RepeatableRule>());
+                Assert.That(session.Rules[0].Actions.Count, Is.EqualTo(2));
+                Assert.That(session.Rules[0].Actions[0], Is.InstanceOf<TagCollectAction>());
+                Assert.That(session.Rules[0].Actions[1], Is.InstanceOf<WaitAction>());
+                Assert.That(session.Rules[1], Is.InstanceOf<Rule>());
+                Assert.That(session.Rules[1].Actions.Count, Is.EqualTo(1));
+                Assert.That(session.Rules[1].Actions[0], Is.InstanceOf<TagCollectAction>());
+            }
         }
     }
 }

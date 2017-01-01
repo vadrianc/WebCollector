@@ -52,38 +52,45 @@
         protected override void ReadActions(XmlReader ruleReader, IRule rule)
         {
             while (ruleReader.Read()) {
-                if (ruleReader.NodeType == XmlNodeType.Element && ruleReader.Name.Equals("action")) {
-                    string typeStr = ruleReader.GetAttribute("type");
-                    ActionType type;
+                if (ruleReader.NodeType != XmlNodeType.Element || !ruleReader.Name.Equals("action")) continue;
 
-                    if (!Enum.TryParse(typeStr.ToUpper(), out type)) continue;
+                string typeStr = ruleReader.GetAttribute("type");
+                ActionType type;
+                if (!Enum.TryParse(typeStr.ToUpper(), out type)) continue;
 
-                    XmlReader actionReader = ruleReader.ReadSubtree();
+                XmlReader actionReader = ruleReader.ReadSubtree();
 
-                    switch (type) {
-                    case ActionType.NAVIGATE: {
-                            NavigateAction action = new NavigateAction(m_Session);
-                            ReadTagAction(actionReader, rule, action);
-                        }
-                        break;
-
-                    case ActionType.COLLECT: {
-                            TagCollectAction action = new TagCollectAction(m_Session, true);
-                            ReadTagAction(actionReader, rule, action);
-                        }
-                        break;
-
-                    case ActionType.WAIT:
-                        ReadWaitAction(actionReader, rule);
-                        break;
-
-                    case ActionType.CLICK:
-                    case ActionType.TYPE:
-                        throw new XmlException(string.Format("Unsupported action type: {0}", type.ToString()));
-
-                    default:
-                        throw new XmlException(string.Format("Unknown action type: {0}", type.ToString()));
+                switch (type) {
+                case ActionType.NAVIGATE: {
+                        NavigateAction action = new NavigateAction(m_Session);
+                        ReadTagAction(actionReader, rule, action);
                     }
+                    break;
+
+                case ActionType.COLLECT: {
+                        bool isMultiCollect = GetBooleanAttribute(ruleReader, "isMultiCollect");
+                        TagCollectAction action = new TagCollectAction(m_Session, isMultiCollect);
+
+                        bool isRepeatCondition = GetBooleanAttribute(ruleReader, "isRepeatCondition");
+                        if (isRepeatCondition) {
+                            IRepeatableRule repeatableRule = rule as IRepeatableRule;
+                            repeatableRule.CanRepeat += action.CanRepeat;
+                        }
+
+                        ReadTagAction(actionReader, rule, action);
+                    }
+                    break;
+
+                case ActionType.WAIT:
+                    ReadWaitAction(actionReader, rule);
+                    break;
+
+                case ActionType.CLICK:
+                case ActionType.TYPE:
+                    throw new XmlException(string.Format("Unsupported action type: {0}", type.ToString()));
+
+                default:
+                    throw new XmlException(string.Format("Unknown action type: {0}", type.ToString()));
                 }
             }
         }

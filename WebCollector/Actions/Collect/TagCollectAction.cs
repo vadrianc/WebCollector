@@ -12,6 +12,8 @@
     public class TagCollectAction : TagActionBase, ICollectAction
     {
         private Regex m_CollectRegex;
+        private MatchCollection m_Matches;
+        private int m_CurrentIndex;
 
         /// <summary>
         /// The regular expression to be used when collecting HTML data.
@@ -65,7 +67,7 @@
         /// <returns>The result in which the content of the found tag is stored.</returns>
         public override IResult Execute()
         {
-            if (!CollectRegex.IsMatch(Session.Html)) return new Result(ActionState.NOT_EXECUTED);
+            if (!CollectRegex.IsMatch(Session.Html)) return new Result(ActionState.FAIL);
 
             if (IsMultipleCollect) {
                 return ExecuteMultiCollect();
@@ -74,12 +76,27 @@
             return ExecuteSingleCollect();
         }
 
+        /// <summary>
+        /// Repeat condition used by the rule which holds the action.
+        /// </summary>
+        /// <returns><c>true</c> if the rule can be repeated, <c>false</c> otherwise.</returns>
+        public bool CanRepeat()
+        {
+            bool canRepeat = m_CurrentIndex < m_Matches.Count - 1;
+            if (!canRepeat && !IsMultipleCollect) {
+                m_Matches = null;
+                m_CurrentIndex = 0;
+            }
+
+            return canRepeat;
+        }
+
         private IResult ExecuteMultiCollect()
         {
-            MatchCollection matches = CollectRegex.Matches(Session.Html);
+            m_Matches = CollectRegex.Matches(Session.Html);
             IList<ItemBase> items = new List<ItemBase>();
 
-            foreach (Match match in matches) {
+            foreach (Match match in m_Matches) {
                 if (!match.Success) continue;
 
                 TextItem item = new TextItem(StripHtmlTags(match.Groups[0].Value));
@@ -91,10 +108,14 @@
 
         private IResult ExecuteSingleCollect()
         {
-            Match match = CollectRegex.Match(Session.Html);
+            if (m_Matches == null) {
+                m_Matches = CollectRegex.Matches(Session.Html);
+            }
 
+            Match match = m_Matches[m_CurrentIndex];
             if (match.Success) {
                 TextItem item = new TextItem(StripHtmlTags(match.Groups[0].Value));
+                m_CurrentIndex++;
                 return new SingleResult<ItemBase>(item, ActionState.SUCCESS);
             }
 

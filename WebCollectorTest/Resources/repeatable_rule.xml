@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<scraper>
+  <settings>
+    <!-- The properties of the job -->
+    <name>YellowPages scraper</name>
+    <address>http://www.yellowpages.com</address>
+    <start>http://www.yellowpages.com/search?search_terms=supermarket&amp;geo_location_terms=Washington%2C%20DC</start>
+  </settings>
+  <automaton>
+    <rule name="collect_rule" isRepeatable="true">
+      <action type="collect" isRepeatCondition="true" isMultiCollect="false">
+        <!-- The type of the tag to be collected that shall be identified using the given class -->
+        <tag>a</tag>
+        <class>business-name</class>
+      </action>
+    </rule>
+  </automaton>
+</scraper>
