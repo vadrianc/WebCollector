@@ -62,7 +62,8 @@
 
                 switch (type) {
                 case ActionType.NAVIGATE: {
-                        NavigateAction action = new NavigateAction(m_Session);
+                        string where = GetStringAttribute(ruleReader, "where");
+                        NavigateAction action = new NavigateAction(m_Session, where);
                         ReadTagAction(actionReader, rule, action);
                     }
                     break;

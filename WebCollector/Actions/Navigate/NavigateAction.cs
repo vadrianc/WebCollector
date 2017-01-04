@@ -15,13 +15,16 @@
 
         private Regex m_HrefTagRegex;
         private string m_Class;
+        private int m_CurrentIndex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigateAction"/> class with the given session.
         /// </summary>
         /// <param name="session">The session.</param>
-        public NavigateAction(WebCollectorSession session) : base(session)
+        /// <param name="where">The navigation direction.</param>
+        public NavigateAction(WebCollectorSession session, string where) : base(session)
         {
+            Where = where;
         }
 
         /// <summary>
@@ -29,8 +32,10 @@
         /// </summary>
         /// <param name="name">The name of the action.</param>
         /// <param name="session">The session.</param>
-        public NavigateAction(string name, WebCollectorSession session) : base(name, session)
+        /// <param name="where">The navigation direction.</param>
+        public NavigateAction(string name, WebCollectorSession session, string where) : base(name, session)
         {
+            Where = where;
         }
 
         /// <summary>
@@ -60,6 +65,15 @@
         }
 
         /// <summary>
+        /// Get the navigation direction, such as "back" or "forward".
+        /// </summary>
+        public string Where
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Execute the navigation action.
         /// </summary>
         /// <returns>The result of the navigation action.</returns>
@@ -67,6 +81,7 @@
         {
             if (!FindNextLink()) return new Result(ActionState.FAIL);
             string html = HtmlUtils.GetHtmlString(Link);
+            Session.AddressTracker.Push(Link);
             Session.Html = html;
 
             ConsoleOutput.Instance.Message(string.Format("Navigated to {0}", Link));
@@ -76,10 +91,18 @@
 
         private bool FindNextLink()
         {
+            if (Where != null && Where.Equals("back")) {
+                Link = Session.AddressTracker.GetPreviousAddress();
+                return true;
+            }
+
             MatchCollection matches = m_HrefTagRegex.Matches(Session.Html);
             if (matches.Count == 0) return false;
 
-            Match match = s_HrefRegex.Match(matches[0].Value);
+            Match match = s_HrefRegex.Match(matches[m_CurrentIndex].Value);
+            if (m_CurrentIndex == matches.Count - 1) m_CurrentIndex = 0;
+            else m_CurrentIndex++;
+
             if (!match.Success) return false;
 
             Link = match.Value.Replace("href=", string.Empty);

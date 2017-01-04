@@ -1,6 +1,7 @@
 ﻿namespace WebCollector
 {
     using System;
+    using Actions.Navigate;
     using SoftwareControllerLib.Control;
 
     /// <summary>
@@ -33,6 +34,7 @@
 
             Address = address;
             StartAddress = startAddress;
+            AddressTracker = new BrowsingTracker();
         }
 
         /// <summary>
@@ -61,6 +63,15 @@
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Get an object holding the addresses where navigation occurred to.
+        /// </summary>
+        public BrowsingTracker AddressTracker
+        {
+            get;
+            private set;
         }
     }
 }

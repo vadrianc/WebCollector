@@ -68,10 +68,7 @@
         public override IResult Execute()
         {
             if (!CollectRegex.IsMatch(Session.Html)) return new Result(ActionState.FAIL);
-
-            if (IsMultipleCollect) {
-                return ExecuteMultiCollect();
-            }
+            if (IsMultipleCollect) return ExecuteMultiCollect();
 
             return ExecuteSingleCollect();
         }
@@ -82,13 +79,7 @@
         /// <returns><c>true</c> if the rule can be repeated, <c>false</c> otherwise.</returns>
         public bool CanRepeat()
         {
-            bool canRepeat = m_CurrentIndex < m_Matches.Count - 1;
-            if (!canRepeat && !IsMultipleCollect) {
-                m_Matches = null;
-                m_CurrentIndex = 0;
-            }
-
-            return canRepeat;
+            return m_CurrentIndex < m_Matches.Count;
         }
 
         private IResult ExecuteMultiCollect()
@@ -108,18 +99,22 @@
 
         private IResult ExecuteSingleCollect()
         {
-            if (m_Matches == null) {
-                m_Matches = CollectRegex.Matches(Session.Html);
+            m_Matches = CollectRegex.Matches(Session.Html);
+            if (m_CurrentIndex >= m_Matches.Count) {
+                m_CurrentIndex = 0;
+            }
+
+            if (m_Matches.Count == 0) {
+                return new Result(ActionState.NOT_EXECUTED);
             }
 
             Match match = m_Matches[m_CurrentIndex];
-            if (match.Success) {
-                TextItem item = new TextItem(StripHtmlTags(match.Groups[0].Value));
-                m_CurrentIndex++;
-                return new SingleResult<ItemBase>(item, ActionState.SUCCESS);
-            }
+            m_CurrentIndex++;
 
-            return new Result(ActionState.NOT_EXECUTED);
+            if (!match.Success) return new Result(ActionState.NOT_EXECUTED);
+
+            TextItem item = new TextItem(StripHtmlTags(match.Groups[0].Value));
+            return new SingleResult<ItemBase>(item, ActionState.SUCCESS);
         }
 
         private string StripHtmlTags(string input)

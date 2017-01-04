@@ -51,6 +51,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Actions\BrowsingTrackerTest.cs" />
     <Compile Include="Actions\WaitActionTest.cs" />
     <Compile Include="Config\WebConfigReaderTest.cs" />
     <Compile Include="Control\WebCollectorSessionTest.cs" />

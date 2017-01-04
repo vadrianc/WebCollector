@@ -69,7 +69,8 @@
                 Assert.That(result.State, Is.EqualTo(ActionState.FAIL));
                 Assert.That(result, Is.InstanceOf<MultiResult>());
                 MultiResult multiResult = result as MultiResult;
-                Assert.That(multiResult.Results.Count, Is.EqualTo(30));
+                // Check for the 30 collected items + the fail action result => thus the 31
+                Assert.That(multiResult.Results.Count, Is.EqualTo(31));
 
                 Assert.That(session.Address, Is.EqualTo("http://www.yellowpages.com"));
                 Assert.That(session.StartAddress, Is.EqualTo("http://www.yellowpages.com/search?search_terms=supermarket&geo_location_terms=Washington%2C%20DC"));
