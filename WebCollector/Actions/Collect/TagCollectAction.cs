@@ -79,6 +79,8 @@
         /// <returns><c>true</c> if the rule can be repeated, <c>false</c> otherwise.</returns>
         public bool CanRepeat()
         {
+            if (m_Matches == null) return false;
+
             return m_CurrentIndex < m_Matches.Count;
         }
 
