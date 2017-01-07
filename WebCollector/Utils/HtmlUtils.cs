@@ -24,16 +24,13 @@
             request.Credentials = CredentialCache.DefaultCredentials;
             WebResponse response = request.GetResponse();
 
-            if (((HttpWebResponse)response).StatusCode != HttpStatusCode.OK) return null;
+            HttpWebResponse webResponse = response as HttpWebResponse;
+            if (webResponse != null && webResponse.StatusCode != HttpStatusCode.OK) return null;
 
-            Stream dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
-
-            reader.Close();
-            response.Close();
-
-            return responseFromServer;
+            using (Stream dataStream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(dataStream)) {
+                return reader.ReadToEnd();
+            }
         }
     }
 }
