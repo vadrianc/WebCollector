@@ -14,7 +14,7 @@
     public class NavigateActionTest
     {
         [Test]
-        [Timeout(3100)]
+        [Timeout(3300)]
         [Category("NavigateAction")]
         public void NavigateExecute()
         {
