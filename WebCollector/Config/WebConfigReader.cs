@@ -1,8 +1,10 @@
 ﻿namespace WebCollector.Config
 {
     using System;
+    using System.Collections.Generic;
     using System.Xml;
     using Actions;
+    using Rule;
     using SoftwareControllerApi.Action;
     using SoftwareControllerApi.Rule;
     using SoftwareControllerLib.Config;
@@ -31,6 +33,7 @@
             string name = string.Empty;
             string address = string.Empty;
             string startAddress = string.Empty;
+            IList<string> outputFiles = new List<string>();
 
             XmlReader settingsReader = m_Reader.ReadSubtree();
 
@@ -38,9 +41,10 @@
                 if (string.IsNullOrEmpty(name) && ReadNodeValue(settingsReader, out name)) continue;
                 if (string.IsNullOrEmpty(address) && ReadNodeValue(settingsReader, out address)) continue;
                 if (string.IsNullOrEmpty(startAddress) && ReadNodeValue(settingsReader, out startAddress)) continue;
+                if (outputFiles.Count == 0 && ReadOutputNodes(settingsReader, outputFiles)) continue;
             }
 
-            m_Session = new WebCollectorSession(name, address, startAddress);
+            m_Session = new WebCollectorSession(name, address, startAddress, outputFiles);
         }
 
         /// <summary>
@@ -51,6 +55,8 @@
         /// <exception cref="XmlException">"Unsupported action type found.</exception>
         protected override void ReadActions(XmlReader ruleReader, IRule rule)
         {
+            UpdateProcessors(rule);
+
             while (ruleReader.Read()) {
                 if (ruleReader.NodeType != XmlNodeType.Element || !ruleReader.Name.Equals("action")) continue;
 
@@ -96,6 +102,16 @@
             }
         }
 
+        private void UpdateProcessors(IRule rule)
+        {
+            if (!rule.IsProcessable) return;
+
+            rule.ResultProcessors = new List<IResultProcessor>();
+            foreach (string file in m_Session.OutputFiles) {
+                rule.ResultProcessors.Add(ProcessorFactory.Create(file));
+            }
+        }
+
         private void ReadTagAction<T>(XmlReader reader, IRule rule, T action) where T : TagActionBase
         {
             string tag = string.Empty;
@@ -136,6 +152,22 @@
             }
 
             return false;
+        }
+
+        private bool ReadOutputNodes(XmlReader reader, IList<string> outputFiles)
+        {
+            if (!reader.Name.Equals("output")) return false;
+
+            while (reader.Read()) {
+                if (reader.NodeType != XmlNodeType.Element || !reader.Name.Equals("save")) continue;
+
+                string save;
+                reader.Read();
+                ReadNodeValue(reader, out save);
+                outputFiles.Add(save);
+            }
+
+            return true;
         }
     }
 }

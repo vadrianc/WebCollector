@@ -1,7 +1,9 @@
 ﻿namespace WebCollector
 {
     using System;
+    using System.Collections.Generic;
     using Actions.Navigate;
+    using SoftwareControllerApi.Rule;
     using SoftwareControllerLib.Control;
 
     /// <summary>
@@ -19,22 +21,26 @@
         /// <paramref name="address"/> is null
         /// or
         /// <paramref name="startAddress"/> is null.
+        /// or
+        /// <paramref name="outputFiles"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="address"/> is empty or whitespace only
         /// or
         /// <paramref name="startAddress"/> is empty or whitespace only.
         /// </exception>
-        public WebCollectorSession(string name, string address, string startAddress) : base(name)
+        public WebCollectorSession(string name, string address, string startAddress, IList<string> outputFiles) : base(name)
         {
             if (address == null) throw new ArgumentNullException("address");
             if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Cannot be empty or white space only", "address");
             if (startAddress == null) throw new ArgumentNullException("startAddress");
             if (string.IsNullOrWhiteSpace(startAddress)) throw new ArgumentException("Cannot be empty or white space only", "startAddress");
+            if (outputFiles == null) throw new ArgumentNullException("outputFiles");
 
             Address = address;
             StartAddress = startAddress;
             AddressTracker = new BrowsingTracker();
+            OutputFiles = outputFiles;
         }
 
         /// <summary>
@@ -69,6 +75,15 @@
         /// Get an object holding the addresses where navigation occurred to.
         /// </summary>
         public BrowsingTracker AddressTracker
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Get the list of output files.
+        /// </summary>
+        public IList<string> OutputFiles
         {
             get;
             private set;
