@@ -26,7 +26,7 @@
             Ping ping = new Ping();
             Uri uri = new Uri(session.Address);
             PingReply reply = ping.Send(uri.Host);
-            if (reply.Status != IPStatus.Success) Assert.Inconclusive("Could not access " + session.Address);
+            if (reply.Status != IPStatus.Success) Assert.Inconclusive("Failed to ping " + session.Address);
 
             NavigateAction action = new NavigateAction(session, null);
             action.Tag = "a";
