@@ -15,8 +15,8 @@
             </action>
             <action type="wait">
                 <!-- The time to wait shall be generated as a random value between the <min> and <max> values -->
-                <min>5000</min>
-                <max>15000</max>
+                <min>1000</min>
+                <max>3000</max>
             </action>
         </rule>
         <rule name="navigate_to_rule">

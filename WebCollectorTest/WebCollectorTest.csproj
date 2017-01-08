@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Actions\BrowsingTrackerTest.cs" />
+    <Compile Include="Actions\NavigateActionTest.cs" />
     <Compile Include="Actions\TagCollectActionTest.cs" />
     <Compile Include="Actions\WaitActionTest.cs" />
     <Compile Include="Config\WebConfigReaderTest.cs" />

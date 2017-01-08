@@ -62,7 +62,8 @@
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));
             WebCollectorSession session = reader.Read();
 
-            using (StreamReader sr = new StreamReader(Path.Combine("Resources", "yellowpages_sample.html"))) {
+            using (StreamReader sr = new StreamReader(Path.Combine("Resources", "yellowpages_sample.html")))
+            { 
                 session.Html = sr.ReadToEnd();
 
                 IResult result = session.RunUntilFailure();
