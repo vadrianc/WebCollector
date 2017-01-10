@@ -25,10 +25,12 @@
 
             switch (extension) {
             case ".csv":
-                return new CsvResultProcessor(file);
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT) return new WindowsCsvResultProcessor(file);
+
+                throw new ApplicationException(string.Format("Unsupported platform: {0}", Environment.OSVersion.Platform));
             }
 
-            throw new ApplicationException(string.Format("Unsupported extension: {0}", extension));
+            throw new ArgumentException(string.Format("Unsupported extension: {0}", extension));
         }
     }
 }

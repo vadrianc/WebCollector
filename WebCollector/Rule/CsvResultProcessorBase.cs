@@ -11,16 +11,19 @@
     /// <summary>
     /// CSV processor class for writing a list of results to a CSV file.
     /// </summary>
-    public class CsvResultProcessor : IResultProcessor
+    public abstract class CsvResultProcessorBase : IResultProcessor
     {
         private readonly string m_CsvFile;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CsvResultProcessor"/> class.
+        /// Initializes a new instance of the <see cref="CsvResultProcessorBase"/> class.
         /// </summary>
         /// <param name="csvFile">The CSV file path.</param>
-        public CsvResultProcessor(string csvFile)
+        public CsvResultProcessorBase(string csvFile)
         {
+            if (csvFile == null) throw new ArgumentNullException("csvFile");
+            if (string.IsNullOrWhiteSpace(csvFile)) throw new ArgumentException("Cannot be empty or whitespace only", "csvFile");
+
             m_CsvFile = csvFile;
         }
 
@@ -30,6 +33,8 @@
         /// <param name="results">The list of results.</param>
         public void Process(IList<IResult> results)
         {
+            if (results == null) throw new ArgumentNullException("results");
+
             using (StreamWriter writer = new StreamWriter(m_CsvFile, true)) {
                 StringBuilder lineBuilder = new StringBuilder();
 
@@ -40,13 +45,20 @@
                     TextItem textItem = singleResult.Content as TextItem;
                     if (textItem == null) continue;
 
-                    lineBuilder.Append(textItem.Content);
+                    lineBuilder.Append(Escape(textItem.Content));
                     lineBuilder.Append(',');
                 }
 
-                string line = lineBuilder.ToString().Trim(',');
+                string line = lineBuilder.ToString().TrimEnd(',');
                 if (!string.IsNullOrWhiteSpace(line)) writer.WriteLine(line);
             }
         }
+
+        /// <summary>
+        /// Escape special characters within the given field.
+        /// </summary>
+        /// <param name="field">The field to be escaped.</param>
+        /// <returns>The given field with escaped special characters.</returns>
+        protected abstract string Escape(string field);
     }
 }
