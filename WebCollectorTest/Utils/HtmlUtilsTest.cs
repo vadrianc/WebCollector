@@ -43,5 +43,46 @@
             string html = HtmlUtils.GetHtmlString(uri.AbsoluteUri);
             Assert.That(html, Is.Not.Null);
         }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        [Category("HtmlUtils")]
+        public void StripNull()
+        {
+            HtmlUtils.StripHtmlTags(null);
+        }
+
+        [Test]
+        [TestCase("<br>")]
+        [TestCase("</br>")]
+        [Category("HtmlUtils")]
+        public void SingleTagElement(string element)
+        {
+            string result = HtmlUtils.StripHtmlTags(element);
+            Assert.That(result, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        [TestCase("<a>abc</a>", "abc")]
+        [TestCase("<a></a>", "")]
+        [TestCase("<h1 attr=\"1\"><a>abc</a></h1>", "abc")]
+        [TestCase("<a><p>abc <br>new line</p></a>", "abc new line")]
+        [Category("HtmlUtils")]
+        public void StartAndEndTag(string element, string text)
+        {
+            string result = HtmlUtils.StripHtmlTags(element);
+            Assert.That(result, Is.EqualTo(text));
+        }
+
+        [Test]
+        [TestCase("<a")]
+        [TestCase("<a>>/a<")]
+        [TestCase(">a<")]
+        [ExpectedException(typeof(ArgumentException))]
+        [Category("HtmlUtils")]
+        public void BadlyFormatterHTMLElement(string element)
+        {
+            HtmlUtils.StripHtmlTags(element);
+        }
     }
 }

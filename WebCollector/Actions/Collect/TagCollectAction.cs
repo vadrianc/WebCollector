@@ -5,6 +5,7 @@
     using Collect;
     using SoftwareControllerApi.Action;
     using SoftwareControllerLib.Action;
+    using Utils;
 
     /// <summary>
     /// Action for collecting the content of a tag.
@@ -71,7 +72,7 @@
             foreach (Match match in m_Matches) {
                 if (!match.Success) continue;
 
-                TextItem item = new TextItem(StripHtmlTags(match.Groups[0].Value));
+                TextItem item = new TextItem(HtmlUtils.StripHtmlTags(match.Groups[0].Value));
                 items.Add(item);
             }
 
@@ -90,17 +91,8 @@
 
             if (!match.Success) return new Result(ActionState.FAIL);
 
-            TextItem item = new TextItem(StripHtmlTags(match.Groups[0].Value));
+            TextItem item = new TextItem(HtmlUtils.StripHtmlTags(match.Groups[0].Value));
             return new SingleResult<ItemBase>(item, ActionState.SUCCESS);
-        }
-
-        private string StripHtmlTags(string input)
-        {
-            int index = input.IndexOf('>');
-            string result = input.Remove(0, index + 1);
-            index = result.IndexOf('<');
-
-            return result.Remove(index);
         }
     }
 }

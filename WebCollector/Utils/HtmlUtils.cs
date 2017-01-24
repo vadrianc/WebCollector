@@ -14,6 +14,7 @@
         /// </summary>
         /// <param name="uri">URI to navigate to.</param>
         /// <returns>The response string.</returns>
+        /// 
         public static string GetHtmlString(string uri)
         {
             if (uri == null) throw new ArgumentNullException("uri", "Cannot be null");
@@ -31,6 +32,29 @@
             using (StreamReader reader = new StreamReader(dataStream)) {
                 return reader.ReadToEnd();
             }
+        }
+
+        /// <summary>
+        /// Strip the starting and ending tags of a HTML element.
+        /// </summary>
+        /// <param name="input">The HTML element.</param>
+        /// <returns>The text between the starting and ending tags of a HTML element.</returns>
+        public static string StripHtmlTags(string input)
+        {
+            if (input == null) throw new ArgumentNullException("input", "Cannot be null");
+
+            int start = input.IndexOf('<');
+            int end = input.IndexOf('>');
+            if (start == -1 || end == -1) throw new ArgumentException("Invalid HTML element.", "input");
+
+            while (start != -1 && end != -1) {
+                if (start > end) throw new ArgumentException("Badly formatted HTML element.", "input");
+                input = input.Remove(start, end - start + 1);
+                start = input.IndexOf('<');
+                end = input.IndexOf('>');
+            }
+
+            return input;
         }
     }
 }
