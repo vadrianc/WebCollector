@@ -65,7 +65,7 @@
         private IResult ExecuteMultiCollect()
         {
             m_Matches = GetMatches();
-            //if (m_Matches.Count == 0) return new Result(ActionState.NOT_EXECUTED);
+            if (m_Matches.Count == 0) return new Result(ActionState.NOT_EXECUTED);
 
             IList<ItemBase> items = new List<ItemBase>();
             foreach (Match match in m_Matches) {
@@ -88,7 +88,7 @@
             Match match = m_Matches[m_CurrentIndex];
             m_CurrentIndex++;
 
-            if (!match.Success) return new Result(ActionState.NOT_EXECUTED);
+            if (!match.Success) return new Result(ActionState.FAIL);
 
             TextItem item = new TextItem(StripHtmlTags(match.Groups[0].Value));
             return new SingleResult<ItemBase>(item, ActionState.SUCCESS);

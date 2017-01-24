@@ -61,7 +61,7 @@
 
         [Test]
         [Category("TagCollectAction")]
-        public void TagCollect_Fail_Execute()
+        public void TagCollect_Not_Executed()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));
             WebCollectorSession session = reader.Read();
@@ -75,7 +75,7 @@
                 IResult result = tagCollectAction.Execute();
 
                 Assert.That(result, Is.Not.Null);
-                Assert.That(result.State, Is.EqualTo(ActionState.FAIL));
+                Assert.That(result.State, Is.EqualTo(ActionState.NOT_EXECUTED));
             }
         }
 
