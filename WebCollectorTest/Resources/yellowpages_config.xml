@@ -20,11 +20,18 @@
         <max>20</max>
       </action>
     </rule>
-    <rule name="collect_rule_fail">
+    <rule name="collect_rule_not_executed">
       <action type="collect">
         <!-- The type of the tag to be collected that shall be identified using the given class -->
         <tag value="h1">
           <class>inexistent-tag</class>
+        </tag>
+      </action>
+    </rule>
+    <rule name="navigate_to_rule">
+      <action type="navigate">
+        <tag value="a">
+          <class>next ajax-page-inexistent</class>
         </tag>
       </action>
     </rule>

@@ -72,11 +72,11 @@
                 Assert.That(result, Is.InstanceOf<MultiResult>());
                 MultiResult multiResult = result as MultiResult;
                 // Check for the 30 collected items + the fail action result => thus the 31
-                Assert.That(multiResult.Results.Count, Is.EqualTo(31));
+                Assert.That(multiResult.Results.Count, Is.EqualTo(32));
 
                 Assert.That(session.Address, Is.EqualTo("http://www.yellowpages.com"));
                 Assert.That(session.StartAddress, Is.EqualTo("http://www.yellowpages.com/search?search_terms=supermarket&geo_location_terms=Washington%2C%20DC"));
-                Assert.That(session.Rules.Count, Is.EqualTo(2));
+                Assert.That(session.Rules.Count, Is.EqualTo(3));
                 Assert.That(session.Rules[0], Is.InstanceOf<RepeatableRule>());
                 Assert.That(session.Rules[0].Actions.Count, Is.EqualTo(2));
                 Assert.That(session.Rules[0].Actions[0], Is.InstanceOf<TagCollectAction>());
