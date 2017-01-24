@@ -1,5 +1,6 @@
 ﻿namespace WebCollector.Actions
 {
+    using System.Collections.Generic;
     using System.Text.RegularExpressions;
     using SoftwareControllerApi.Action;
     using SoftwareControllerLib.Action;
@@ -13,8 +14,6 @@
     {
         private static Regex s_HrefRegex = new Regex("href=\"[^\"]+\"");
 
-        private Regex m_HrefTagRegex;
-        private string m_Class;
         private int m_CurrentIndex;
 
         /// <summary>
@@ -25,6 +24,7 @@
         public NavigateAction(WebCollectorSession session, string where) : base(session)
         {
             Where = where;
+            WithEndTag = false;
         }
 
         /// <summary>
@@ -45,23 +45,6 @@
         {
             get;
             private set;
-        }
-
-        /// <summary>
-        /// The class of the HTML tag.
-        /// </summary>
-        public override string Class
-        {
-            get
-            {
-                return m_Class;
-            }
-
-            set
-            {
-                m_HrefTagRegex = new Regex(string.Format("{0}{1}{2}", "<a [^<]*class=\"", value, "\"[^<]*>"));
-                m_Class = value;
-            }
         }
 
         /// <summary>
@@ -96,7 +79,7 @@
                 return true;
             }
 
-            MatchCollection matches = m_HrefTagRegex.Matches(Session.Html);
+            List<Match> matches = GetMatches();
             if (matches.Count == 0) return false;
 
             Match match = s_HrefRegex.Match(matches[m_CurrentIndex].Value);

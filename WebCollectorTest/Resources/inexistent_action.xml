@@ -9,8 +9,9 @@
     <rule name="collect_rule">
       <!-- The inexistent action type. -->
       <action type="click"> 
-        <tag>a</tag>
-        <class>business-name</class>
+        <tag value="a">
+          <class>business-name</class>
+        </tag>
       </action>
     </rule>
   </automaton>

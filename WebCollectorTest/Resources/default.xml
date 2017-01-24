@@ -10,8 +10,9 @@
         <rule name="collect_rule">
             <action type="collect">
                 <!-- The type of the tag to be collected that shall be identified using the given class -->
-                <tag>a</tag>
-                <class>business-name</class>
+                <tag value="a">
+                  <class>business-name</class>
+                </tag>
             </action>
             <action type="wait">
                 <!-- The time to wait shall be generated as a random value between the <min> and <max> values -->
@@ -21,8 +22,9 @@
         </rule>
         <rule name="navigate_to_rule">
             <action type="navigate">
-                <tag>a</tag>
-                <class>next ajax-page</class>
+                <tag value="a">
+                  <class>next ajax-page</class>
+                </tag>
             </action>
         </rule>
     </automaton>

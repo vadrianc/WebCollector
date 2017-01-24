@@ -10,8 +10,9 @@
     <rule name="collect_rule" isRepeatable="true">
       <action type="collect" isRepeatCondition="true" isMultiCollect="false">
         <!-- The type of the tag to be collected that shall be identified using the given class -->
-        <tag>a</tag>
-        <class>business-name</class>
+        <tag value="a">
+          <class>business-name</class>
+        </tag>
       </action>
     </rule>
   </automaton>

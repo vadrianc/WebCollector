@@ -10,8 +10,9 @@
     <rule name="collect_rule" isRepeatable="true">
       <action type="collect" isRepeatCondition="true" isMultiCollect="false">
         <!-- The type of the tag to be collected that shall be identified using the given class -->
-        <tag>a</tag>
-        <class>business-name</class>
+        <tag value="a">
+          <class>business-name</class>
+        </tag>
       </action>
       <action type="wait">
         <!-- The time to wait shall be generated as a random value between the <min> and <max> values -->
@@ -22,8 +23,9 @@
     <rule name="collect_rule_fail">
       <action type="collect">
         <!-- The type of the tag to be collected that shall be identified using the given class -->
-        <tag>h1</tag>
-        <class>inexistent-tag</class>
+        <tag value="h1">
+          <class>inexistent-tag</class>
+        </tag>
       </action>
     </rule>
   </automaton>

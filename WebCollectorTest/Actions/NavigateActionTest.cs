@@ -1,6 +1,7 @@
 ﻿namespace WebCollectorTest.Actions
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Net.NetworkInformation;
     using NUnit.Framework;
@@ -14,7 +15,7 @@
     public class NavigateActionTest
     {
         [Test]
-        [Timeout(3300)]
+        [Timeout(5000)]
         [Category("NavigateAction")]
         public void NavigateExecute()
         {
@@ -30,11 +31,13 @@
 
             NavigateAction action = new NavigateAction(session, null);
             action.Tag = "a";
-            action.Class = "next ajax-page";
+            action.Properties = new Dictionary<string, string>();
+            action.Properties.Add("class", "next ajax-page");
 
             Assert.That(action.Link, Is.Null);
             Assert.That(action.Tag, Is.EqualTo("a"));
-            Assert.That(action.Class, Is.EqualTo("next ajax-page"));
+            Assert.That(action.Properties.Count, Is.EqualTo(1));
+            Assert.That(action.Properties["class"], Is.EqualTo("next ajax-page"));
             Assert.That(action.Where, Is.Null);
             Assert.That(action.Session, Is.EqualTo(session));
             Assert.That(action.Name, Is.Null);
@@ -44,11 +47,11 @@
             Assert.That(result.State, Is.EqualTo(ActionState.SUCCESS));
             Assert.That(action.Link, Is.EqualTo("http://www.yellowpages.com/search?search_terms=supermarket&geo_location_terms=Washington%2C%20DC&page=2"));
             Assert.That(action.Tag, Is.EqualTo("a"));
-            Assert.That(action.Class, Is.EqualTo("next ajax-page"));
+            Assert.That(action.Properties.Count, Is.EqualTo(1));
+            Assert.That(action.Properties["class"], Is.EqualTo("next ajax-page"));
             Assert.That(action.Where, Is.Null);
             Assert.That(action.Session, Is.EqualTo(session));
             Assert.That(action.Name, Is.Null);
-
         }
     }
 }

@@ -114,18 +114,43 @@
 
         private void ReadTagAction<T>(XmlReader reader, IRule rule, T action) where T : TagActionBase
         {
-            string tag = string.Empty;
-            string cls = string.Empty;
-
             while (reader.Read()) {
-                if (string.IsNullOrEmpty(tag) && ReadNodeValue(reader, out tag)) continue;
-                if (string.IsNullOrEmpty(cls) && ReadNodeValue(reader, out cls)) continue;
+                if (!reader.Name.Equals("tag")) {
+                    continue;
+                } else {
+                    break;
+                }
             }
 
-            action.Tag = tag;
-            action.Class = cls;
+            action.Tag = reader.GetAttribute("value");
+            action.Properties = ReadProperties(reader);
 
             rule.AddAction(action);
+        }
+
+        private Dictionary<string, string> ReadProperties(XmlReader reader)
+        {
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            string key = null;
+            string value = null;
+
+            while (reader.Read()) {
+                if (reader.NodeType == XmlNodeType.Element) {
+                    key = reader.Name;
+                } else if (reader.NodeType == XmlNodeType.Text) {
+                    value = reader.Value;
+                }
+
+                if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value)) {
+                    properties.Add(key, value);
+                    key = null;
+                    value = null;
+                }
+
+                if (reader.Name.Equals("tag") && reader.NodeType == XmlNodeType.EndElement) break;
+            }
+
+            return properties;
         }
 
         private void ReadWaitAction(XmlReader reader, IRule rule)
