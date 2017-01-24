@@ -12,10 +12,12 @@
     /// </summary>
     static class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
+            Options options = new Options(args);
+
             try {
-                WebConfigReader reader = new WebConfigReader("default.xml");
+                WebConfigReader reader = new WebConfigReader(options.Config);
                 WebCollectorSession session = reader.Read();
                 session.Html = HtmlUtils.GetHtmlString(session.StartAddress);
                 session.AddressTracker.Push(session.StartAddress);

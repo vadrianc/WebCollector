@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rule\WindowsCsvResultProcessorTest.cs" />
     <Compile Include="Utils\HtmlUtilsTest.cs" />
+    <Compile Include="Utils\OptionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

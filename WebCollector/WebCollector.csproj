@@ -58,6 +58,7 @@
     <Compile Include="Rule\ProcessorFactory.cs" />
     <Compile Include="Rule\WindowsCsvResultProcessor.cs" />
     <Compile Include="Utils\HtmlUtils.cs" />
+    <Compile Include="Utils\Options.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
