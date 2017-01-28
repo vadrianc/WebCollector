@@ -1,6 +1,7 @@
 ﻿namespace WebCollector.Utils
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Net;
 
@@ -45,13 +46,47 @@
 
             int start = input.IndexOf('<');
             int end = input.IndexOf('>');
-            if (start == -1 || end == -1) throw new ArgumentException("Invalid HTML element.", "input");
+            if (start == -1 || end == -1) throw new ArgumentException(string.Format("Invalid HTML element: {0}", input), "input");
 
             while (start != -1 && end != -1) {
-                if (start > end) throw new ArgumentException("Badly formatted HTML element.", "input");
+                if (start > end) throw new ArgumentException(string.Format("Badly formatted HTML element: {0}", input), "input");
                 input = input.Remove(start, end - start + 1);
                 start = input.IndexOf('<');
                 end = input.IndexOf('>');
+            }
+
+            return input;
+        }
+
+        /// <summary>
+        /// Taken from http://www.w3schools.com/html/html_entities.asp
+        /// </summary>
+        private static readonly Dictionary<string, char> s_Symbols = new Dictionary<string, char>() {
+            { "&nbsp;", ' ' },
+            { "&lt;", '<' },
+            { "&gt;", '>' },
+            { "&amp;", '&' },
+            { "&quot;", '"' },
+            { "&apos;", '\'' },
+            { "&cent;", '¢' },
+            { "&pound;", '£' },
+            { "&yen;", '¥' },
+            { "&euro;", '€' },
+            { "&copy;", '©' },
+            { "&reg;", '®' }
+        };
+
+        /// <summary>
+        /// Replace all HTML specific symbols with their corresponding character.
+        /// </summary>
+        /// <param name="input">The input string containing symbols.</param>
+        /// <returns>The input string with replaced symbols.</returns>
+        public static string ReplaceSymbols(string input)
+        {
+            if (input == null) throw new ArgumentNullException("input");
+
+            foreach (KeyValuePair<string, char> pair in s_Symbols) {
+                input = input.Replace(pair.Key, pair.Value.ToString());
             }
 
             return input;

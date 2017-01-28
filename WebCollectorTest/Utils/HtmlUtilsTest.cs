@@ -84,5 +84,26 @@
         {
             HtmlUtils.StripHtmlTags(element);
         }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        [Category("HtmlUtils")]
+        public void ReplaceSymbolsInNullString()
+        {
+            HtmlUtils.ReplaceSymbols(null);
+        }
+
+        [Test]
+        [TestCase("", "")]
+        [TestCase("<div>&nbsp;</div>", "<div> </div>")]
+        [TestCase("<div>&nbsp;&nbsp;</div>", "<div>  </div>")]
+        [TestCase("<div>z&nbsp;abc&nbsp;def</div>", "<div>z abc def</div>")]
+        [TestCase("&pound;&copy;", "£©")]
+        [Category("HtmlUtils")]
+        public void ReplaceSymbols(string input, string expectedOutput)
+        {
+            string output = HtmlUtils.ReplaceSymbols(input);
+            Assert.That(output, Is.EqualTo(expectedOutput));
+        }
     }
 }

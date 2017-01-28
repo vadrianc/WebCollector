@@ -7,6 +7,7 @@
     using Actions.Collect;
     using SoftwareControllerApi.Action;
     using SoftwareControllerApi.Rule;
+    using Utils;
 
     /// <summary>
     /// CSV processor class for writing a list of results to a CSV file.
@@ -45,7 +46,16 @@
                     TextItem textItem = singleResult.Content as TextItem;
                     if (textItem == null) continue;
 
-                    lineBuilder.Append(Escape(textItem.Content));
+                    string content = textItem.Content;
+                    if (content != null) {
+                        content = textItem.Content.Replace(Environment.NewLine, " ");
+                        content = content.Replace("\n", string.Empty);
+                        content = content.Replace("\t", string.Empty);
+                        content = HtmlUtils.ReplaceSymbols(content);
+                        content = content.Trim();
+                    }
+
+                    lineBuilder.Append(Escape(content));
                     lineBuilder.Append(',');
                 }
 

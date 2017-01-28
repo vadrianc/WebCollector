@@ -32,6 +32,9 @@
 
         [Test]
         [TestCase("abc", "cba", "abc,cba")]
+        [TestCase("abc\n", "\tcba", "abc,cba")]
+        [TestCase("abc\n\t\t\t", "\tcba", "abc,cba")]
+        [TestCase("\n", "\tcba\n", ",cba")]
         [TestCase("abc", "cb,a", "abc,\"cb,a\"")]
         [TestCase("abc", "cba,", "abc,\"cba,\"")]
         [TestCase(null, "cba", ",cba")]

@@ -78,7 +78,14 @@
                     m_CollectRegexList = new List<Regex>();
 
                     foreach (string pattern in GetPatterns(WithEndTag)) {
-                        m_CollectRegexList.Add(new Regex(pattern));
+                        Regex regex;
+                        if (WithEndTag) {
+                            regex = new Regex(pattern, RegexOptions.Singleline);
+                        } else {
+                            regex = new Regex(pattern);
+                        }
+
+                        m_CollectRegexList.Add(regex);
                     }
                 }
 
@@ -135,7 +142,7 @@
                 patternBuilder.Append("[^<]*>");
 
                 if (withEndTag) {
-                    patternBuilder.Append("[^<]*");
+                    patternBuilder.Append("(.*?)");
                     patternBuilder.Append("</");
                     patternBuilder.Append(Tag);
                     patternBuilder.Append(">");
