@@ -31,13 +31,15 @@
 
             NavigateAction action = new NavigateAction(session, null);
             action.Tag = "a";
-            action.Properties = new Dictionary<string, string>();
-            action.Properties.Add("class", "next ajax-page");
+            action.Attributes = new List<TagAttribute>();
+            action.Attributes.Add(new TagAttribute("class", "next ajax-page"));
 
             Assert.That(action.Link, Is.Null);
             Assert.That(action.Tag, Is.EqualTo("a"));
-            Assert.That(action.Properties.Count, Is.EqualTo(1));
-            Assert.That(action.Properties["class"], Is.EqualTo("next ajax-page"));
+            Assert.That(action.Attributes.Count, Is.EqualTo(1));
+            Assert.That(action.Attributes[0].Name, Is.EqualTo("class"));
+            Assert.That(action.Attributes[0].Value, Is.EqualTo("next ajax-page"));
+            Assert.That(action.Attributes[0].IsSingleQuote, Is.False);
             Assert.That(action.Where, Is.Null);
             Assert.That(action.Session, Is.EqualTo(session));
             Assert.That(action.Name, Is.Null);
@@ -47,8 +49,10 @@
             Assert.That(result.State, Is.EqualTo(ActionState.SUCCESS));
             Assert.That(action.Link, Is.EqualTo("http://www.yellowpages.com/search?search_terms=supermarket&geo_location_terms=Washington%2C%20DC&page=2"));
             Assert.That(action.Tag, Is.EqualTo("a"));
-            Assert.That(action.Properties.Count, Is.EqualTo(1));
-            Assert.That(action.Properties["class"], Is.EqualTo("next ajax-page"));
+            Assert.That(action.Attributes.Count, Is.EqualTo(1));
+            Assert.That(action.Attributes[0].Name, Is.EqualTo("class"));
+            Assert.That(action.Attributes[0].Value, Is.EqualTo("next ajax-page"));
+            Assert.That(action.Attributes[0].IsSingleQuote, Is.False);
             Assert.That(action.Where, Is.Null);
             Assert.That(action.Session, Is.EqualTo(session));
             Assert.That(action.Name, Is.Null);

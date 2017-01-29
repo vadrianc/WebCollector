@@ -24,8 +24,8 @@
                 session.Html = sr.ReadToEnd();
                 TagCollectAction tagCollectAction = new TagCollectAction(session, true);
                 tagCollectAction.Tag = "a";
-                tagCollectAction.Properties = new Dictionary<string, string>();
-                tagCollectAction.Properties.Add("class", "business-name");
+                tagCollectAction.Attributes = new List<TagAttribute>();
+                tagCollectAction.Attributes.Add(new TagAttribute("class", "business-name"));
                 IResult result = tagCollectAction.Execute();
 
                 Assert.That(result, Is.Not.Null);
@@ -47,8 +47,8 @@
                 session.Html = sr.ReadToEnd();
                 TagCollectAction tagCollectAction = new TagCollectAction(session, false);
                 tagCollectAction.Tag = "a";
-                tagCollectAction.Properties = new Dictionary<string, string>();
-                tagCollectAction.Properties.Add("class", "business-name");
+                tagCollectAction.Attributes = new List<TagAttribute>();
+                tagCollectAction.Attributes.Add(new TagAttribute("class", "business-name"));
                 IResult result = tagCollectAction.Execute();
 
                 Assert.That(result, Is.Not.Null);
@@ -70,8 +70,8 @@
                 session.Html = sr.ReadToEnd();
                 TagCollectAction tagCollectAction = new TagCollectAction(session, true);
                 tagCollectAction.Tag = "inexistent-tag";
-                tagCollectAction.Properties = new Dictionary<string, string>();
-                tagCollectAction.Properties.Add("class", "inexistent-class");
+                tagCollectAction.Attributes = new List<TagAttribute>();
+                tagCollectAction.Attributes.Add(new TagAttribute("class", "inexistent-class"));
                 IResult result = tagCollectAction.Execute();
 
                 Assert.That(result, Is.Not.Null);
@@ -92,8 +92,8 @@
                 session.Html = sr.ReadToEnd();
                 TagCollectAction tagCollectAction = new TagCollectAction(session, true);
                 tagCollectAction.Tag = tag;
-                tagCollectAction.Properties = new Dictionary<string, string>();
-                tagCollectAction.Properties.Add("class", cls);
+                tagCollectAction.Attributes = new List<TagAttribute>();
+                tagCollectAction.Attributes.Add(new TagAttribute("class", cls));
                 tagCollectAction.Execute();
 
                 Assert.That(tagCollectAction.CanRepeat(), Is.EqualTo(canRepeat));

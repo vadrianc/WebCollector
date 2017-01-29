@@ -48,9 +48,9 @@
         }
 
         /// <summary>
-        /// Get or set the collection of properties and their values.
+        /// Get or set the collection of attributes and their values.
         /// </summary>
-        public Dictionary<string, string> Properties
+        public List<TagAttribute> Attributes
         {
             get;
             set;
@@ -128,17 +128,29 @@
         {
             List<string> patterns = new List<string>();
 
-            foreach (KeyValuePair<string, string> pair in Properties) {
+            foreach (TagAttribute attribute in Attributes) {
                 StringBuilder patternBuilder = new StringBuilder();
                 patternBuilder.Append("<");
                 patternBuilder.Append(Tag);
                 patternBuilder.Append("[^<]*");
 
-                patternBuilder.Append(pair.Key);
+                patternBuilder.Append(attribute.Name);
                 patternBuilder.Append('=');
-                patternBuilder.Append("\"");
-                patternBuilder.Append(pair.Value);
-                patternBuilder.Append("\"");
+
+                if (attribute.IsSingleQuote) {
+                    patternBuilder.Append('\'');
+                } else {
+                    patternBuilder.Append('\"');
+                }
+
+                patternBuilder.Append(attribute.Value);
+
+                if (attribute.IsSingleQuote) {
+                    patternBuilder.Append('\'');
+                } else {
+                    patternBuilder.Append('\"');
+                }
+
                 patternBuilder.Append("[^<]*>");
 
                 if (withEndTag) {

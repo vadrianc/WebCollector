@@ -123,28 +123,35 @@
             }
 
             action.Tag = reader.GetAttribute("value");
-            action.Properties = ReadProperties(reader);
+            action.Attributes = ReadProperties(reader);
 
             rule.AddAction(action);
         }
 
-        private Dictionary<string, string> ReadProperties(XmlReader reader)
+        private readonly string c_DoubleQuote = "double";
+
+        private List<TagAttribute> ReadProperties(XmlReader reader)
         {
-            Dictionary<string, string> properties = new Dictionary<string, string>();
+            List<TagAttribute> properties = new List<TagAttribute>();
             string key = null;
             string value = null;
+            string quote_type = c_DoubleQuote;
 
             while (reader.Read()) {
                 if (reader.NodeType == XmlNodeType.Element) {
                     key = reader.Name;
+                    quote_type = GetStringAttribute(reader, "quote_type");
                 } else if (reader.NodeType == XmlNodeType.Text) {
                     value = reader.Value;
                 }
 
                 if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value)) {
-                    properties.Add(key, value);
+                    bool isSingleQuote = quote_type == null ? false : quote_type.Equals("single");
+                    TagAttribute tagAttribute = new TagAttribute(key, value, isSingleQuote);
+                    properties.Add(tagAttribute);
                     key = null;
                     value = null;
+                    quote_type = c_DoubleQuote;
                 }
 
                 if (reader.Name.Equals("tag") && reader.NodeType == XmlNodeType.EndElement) break;

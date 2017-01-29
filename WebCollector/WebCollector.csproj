@@ -49,6 +49,7 @@
     <Compile Include="Actions\Navigate\BrowsingTracker.cs" />
     <Compile Include="Actions\Navigate\NavigateAction.cs" />
     <Compile Include="Actions\TagActionBase.cs" />
+    <Compile Include="Actions\TagAttribute.cs" />
     <Compile Include="Actions\WaitAction.cs" />
     <Compile Include="Config\WebConfigReader.cs" />
     <Compile Include="Program.cs" />
