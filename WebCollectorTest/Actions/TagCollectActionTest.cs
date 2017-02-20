@@ -10,11 +10,10 @@
     using WebCollector.Actions.Collect;
     using WebCollector.Config;
 
-    [TestFixture]
+    [TestFixture(Category = "TagCollectAction")]
     public class TagCollectActionTest
     {
         [Test]
-        [Category("TagCollectAction")]
         public void TagCollect_MultiCollect_Execute()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));
@@ -37,7 +36,6 @@
         }
 
         [Test]
-        [Category("TagCollectAction")]
         public void TagCollect_SingleCollect_Execute()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));
@@ -60,7 +58,6 @@
         }
 
         [Test]
-        [Category("TagCollectAction")]
         public void TagCollect_Not_Executed()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));
@@ -82,7 +79,6 @@
         [Test]
         [TestCase("a", "business-name", true)]
         [TestCase("inexistent-tag", "inexistent-class", false)]
-        [Category("TagCollectAction")]
         public void TagCollect_CanCollect_Execute(string tag, string cls, bool canRepeat)
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));
@@ -103,7 +99,6 @@
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        [Category("TagCollectAction")]
         public void TagCollect_IsMultiCollect(bool isMultiCollect)
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));

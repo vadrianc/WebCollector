@@ -11,12 +11,11 @@
     using WebCollector.Actions;
     using WebCollector.Config;
 
-    [TestFixture]
+    [TestFixture(Category = "WebCollectorSession")]
     public class WebCollectorSessionTest
     {
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        [Category("WebCollectorSession")]
         public void NullAddress()
         {
             new WebCollectorSession("abc", null, "http://www.yellowpages.com/search?search_terms=supermarket&amp;geo_location_terms=Washington%2C%20DC", new List<string>());
@@ -24,7 +23,6 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        [Category("WebCollectorSession")]
         public void NullStartAddress()
         {
             new WebCollectorSession("abc", "http://www.yellowpages.com", null, new List<string>());
@@ -32,7 +30,6 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        [Category("WebCollectorSession")]
         public void EmptyAddress()
         {
             new WebCollectorSession("abc", "   ", "http://www.yellowpages.com/search?search_terms=supermarket&amp;geo_location_terms=Washington%2C%20DC", new List<string>());
@@ -40,14 +37,12 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        [Category("WebCollectorSession")]
         public void EmptyStartAddress()
         {
             new WebCollectorSession("abc", "http://www.yellowpages.com", "   ", new List<string>());
         }
 
         [Test]
-        [Category("WebCollectorSession")]
         public void CheckAddressAndStartAddress()
         {
             WebCollectorSession session = new WebCollectorSession("abc", "http://www.yellowpages.com", "http://www.yellowpages.com/search?search_terms=supermarket&amp;geo_location_terms=Washington%2C%20DC", new List<string>());
@@ -57,7 +52,6 @@
         }
 
         [Test]
-        [Category("WebCollectorSession")]
         public void RunYellowPagesSessionAndFail()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "yellowpages_config.xml"));

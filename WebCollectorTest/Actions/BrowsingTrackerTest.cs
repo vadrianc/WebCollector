@@ -3,11 +3,10 @@
     using NUnit.Framework;
     using WebCollector.Actions.Navigate;
 
-    [TestFixture]
+    [TestFixture(Category = "BrowsingTracker")]
     public class BrowsingTrackerTest
     {
         [Test]
-        [Category("BrowsingTracker")]
         public void PushAndPop()
         {
             BrowsingTracker tracker = new BrowsingTracker();
@@ -17,7 +16,6 @@
         }
 
         [Test]
-        [Category("BrowsingTracker")]
         public void GetPreviousAddress()
         {
             BrowsingTracker tracker = new BrowsingTracker();
@@ -28,7 +26,6 @@
         }
 
         [Test]
-        [Category("BrowsingTracker")]
         public void GetPreviousAddressOneAddress()
         {
             BrowsingTracker tracker = new BrowsingTracker();
@@ -38,7 +35,6 @@
         }
 
         [Test]
-        [Category("BrowsingTracker")]
         public void GetPreviousAddressNoAddress()
         {
             BrowsingTracker tracker = new BrowsingTracker();

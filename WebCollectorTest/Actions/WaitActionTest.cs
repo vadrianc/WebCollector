@@ -5,12 +5,11 @@
     using SoftwareControllerApi.Action;
     using WebCollector.Actions;
 
-    [TestFixture]
+    [TestFixture(Category = "WaitAction")]
     public class WaitActionTest
     {
         [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        [Category("WaitAction")]
         public void NegativeMin()
         {
             new WaitAction(-1, 5);
@@ -18,7 +17,6 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        [Category("WaitAction")]
         public void NegativeMax()
         {
             new WaitAction(3, -40);
@@ -26,7 +24,6 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        [Category("WaitAction")]
         public void MaxLessThanMin()
         {
             new WaitAction(40, 20);
@@ -34,7 +31,6 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        [Category("WaitAction")]
         public void NullName()
         {
             new WaitAction(null, 20, 100);
@@ -42,7 +38,6 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        [Category("WaitAction")]
         public void EmptyName()
         {
             new WaitAction(string.Empty, 20, 100);
@@ -50,14 +45,12 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        [Category("WaitAction")]
         public void WhitespaceName()
         {
             new WaitAction("   ", 20, 100);
         }
 
         [Test]
-        [Category("WaitAction")]
         public void CheckMinAndMax()
         {
             WaitAction waitAction = new WaitAction(1000, 5000);
@@ -67,7 +60,6 @@
         }
 
         [Test]
-        [Category("WaitAction")]
         public void CheckMinMaxAndName()
         {
             WaitAction waitAction = new WaitAction("abc", 1000, 5000);
@@ -79,7 +71,6 @@
 
         [Test]
         [Timeout(2100)]
-        [Category("WaitAction")]
         public void CheckWait()
         {
             WaitAction waitAction = new WaitAction(1000, 2000);

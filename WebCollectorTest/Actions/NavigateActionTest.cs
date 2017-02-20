@@ -11,12 +11,11 @@
     using WebCollector.Config;
     using WebCollector.Utils;
 
-    [TestFixture]
+    [TestFixture(Category = "NavigateAction")]
     public class NavigateActionTest
     {
         [Test]
         [Timeout(5000)]
-        [Category("NavigateAction")]
         public void NavigateExecute()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "default.xml"));

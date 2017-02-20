@@ -9,12 +9,11 @@
     using WebCollector.Actions.Collect;
     using WebCollector.Rule;
 
-    [TestFixture]
+    [TestFixture(Category = "WindowsCsvResultProcessor")]
     public class WindowsCsvResultProcessorTest
     {
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        [Category("WindowsCsvResultProcessor")]
         public void NullCsvFile()
         {
             new WindowsCsvResultProcessor(null);
@@ -24,7 +23,6 @@
         [TestCase("")]
         [TestCase("   ")]
         [ExpectedException(typeof(ArgumentException))]
-        [Category("WindowsCsvResultProcessor")]
         public void EmptyCsvFile(string csvFile)
         {
             new WindowsCsvResultProcessor(csvFile);
@@ -39,7 +37,6 @@
         [TestCase("abc", "cba,", "abc,\"cba,\"")]
         [TestCase(null, "cba", ",cba")]
         [TestCase("", "cba", ",cba")]
-        [Category("WindowsCsvResultProcessor")]
         public void CsvTwoFields(string field1, string field2, string expectedLine)
         {
             try {
@@ -69,7 +66,6 @@
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        [Category("WindowsCsvResultProcessor")]
         public void NullResults()
         {
             WindowsCsvResultProcessor windowsCsv = new WindowsCsvResultProcessor("test.csv");
@@ -77,7 +73,6 @@
         }
 
         [Test]
-        [Category("WindowsCsvResultProcessor")]
         public void EmptyResults()
         {
             try {

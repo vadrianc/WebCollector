@@ -9,12 +9,11 @@
     using WebCollector.Actions;
     using WebCollector.Config;
 
-    [TestFixture]
+    [TestFixture(Category = "WebConfigReader")]
     public class WebConfigReaderTest
     {
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        [Category("WebConfigReader")]
         public void NullConfigFile()
         {
             new WebConfigReader(null);
@@ -24,14 +23,12 @@
         [TestCase("")]
         [TestCase("   ")]
         [ExpectedException(typeof(ArgumentException))]
-        [Category("WebConfigReader")]
         public void EmptyConfigFile(string file)
         {
             new WebConfigReader(file);
         }
 
         [Test]
-        [Category("WebConfigReader")]
         public void ReadConfig()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "default.xml"));
@@ -55,7 +52,6 @@
 
         [Test]
         [ExpectedException(typeof(XmlException))]
-        [Category("WebConfigReader")]
         public void InexistentActionInConfig()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "inexistent_action.xml"));
@@ -63,7 +59,6 @@
         }
 
         [Test]
-        [Category("WebConfigReader")]
         public void ConfigWithRepeatableRule()
         {
             WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "repeatable_rule.xml"));
