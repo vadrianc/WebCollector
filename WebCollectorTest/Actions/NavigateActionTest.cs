@@ -15,6 +15,40 @@
     public class NavigateActionTest
     {
         [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullSession()
+        {
+            new NavigateAction(null, "back");
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullSession2()
+        {
+            new NavigateAction("abc", null, "back");
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullActionName()
+        {
+            WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "default.xml"));
+            WebCollectorSession session = reader.Read();
+
+            new NavigateAction(null, session, "back");
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void EmptyActionName()
+        {
+            WebConfigReader reader = new WebConfigReader(Path.Combine("Resources", "default.xml"));
+            WebCollectorSession session = reader.Read();
+
+            new NavigateAction(string.Empty, session, "back");
+        }
+
+        [Test]
         [Timeout(5000)]
         public void NavigateExecute()
         {

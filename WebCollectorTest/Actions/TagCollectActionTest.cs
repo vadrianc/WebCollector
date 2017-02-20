@@ -1,5 +1,6 @@
 ﻿namespace WebCollectorTest.Actions
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using NUnit.Framework;
@@ -13,6 +14,20 @@
     [TestFixture(Category = "TagCollectAction")]
     public class TagCollectActionTest
     {
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullSession()
+        {
+            new TagCollectAction(null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullSession2()
+        {
+            new TagCollectAction(null, false);
+        }
+
         [Test]
         public void TagCollect_MultiCollect_Execute()
         {
