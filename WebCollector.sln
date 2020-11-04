@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SoftwareController", "Softw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCollectorTest", "WebCollectorTest\WebCollectorTest.csproj", "{AA4FA472-2DB3-426F-A0F1-598F16FF1F4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareControllerApi", "..\..\..\framework\SoftwareController\SoftwareControllerApi\SoftwareControllerApi.csproj", "{E673B825-BB7F-48AF-A5E6-76B9D8059CFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareControllerApi", "..\SoftwareController\SoftwareControllerApi\SoftwareControllerApi.csproj", "{E673B825-BB7F-48AF-A5E6-76B9D8059CFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareControllerLib", "..\..\..\framework\SoftwareController\SoftwareControllerLib\SoftwareControllerLib.csproj", "{05289618-5F5F-46BF-BB82-CEFD8C546B65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareControllerLib", "..\SoftwareController\SoftwareControllerLib\SoftwareControllerLib.csproj", "{05289618-5F5F-46BF-BB82-CEFD8C546B65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

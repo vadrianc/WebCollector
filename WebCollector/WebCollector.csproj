@@ -65,11 +65,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\framework\SoftwareController\SoftwareControllerApi\SoftwareControllerApi.csproj">
+    <ProjectReference Include="..\..\SoftwareController\SoftwareControllerApi\SoftwareControllerApi.csproj">
       <Project>{e673b825-bb7f-48af-a5e6-76b9d8059cfb}</Project>
       <Name>SoftwareControllerApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\framework\SoftwareController\SoftwareControllerLib\SoftwareControllerLib.csproj">
+    <ProjectReference Include="..\..\SoftwareController\SoftwareControllerLib\SoftwareControllerLib.csproj">
       <Project>{05289618-5f5f-46bf-bb82-cefd8c546b65}</Project>
       <Name>SoftwareControllerLib</Name>
     </ProjectReference>
