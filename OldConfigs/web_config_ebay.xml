@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<scraper>
+    <settings>
+        <!-- The properties of the job -->
+        <name>Ebay scraper</name>
+        <address>http://www.ebay.com</address>
+        <start>http://www.ebay.com/sch/i.html?_from&#61;R40&#38;_trksid&#61;p2050601.m570.l1313.TR0.TRC0.H0.Xpcb.TRS0&#38;_nkw&#61;pcb&#38;_sacat&#61;0</start>
+        <output>
+            <save>ebay.csv</save>
+        </output>
+    </settings>
+    <automaton>
+        <rule name="collect_rule" isRepeatable="true" isProcessable="true">
+            <action type="collect"  isRepeatCondition="true" isMultiCollect="false">
+                <tag value="a">
+                    <class>vip</class>
+                </tag>
+            </action>
+            <action type="navigate">
+                <tag value="a">
+                    <class>vip</class>
+                </tag>
+            </action>
+            <action type="wait">
+                <!-- The time to wait shall be generated as a random value between the <min> and <max> values -->
+                <min>2999</min>
+                <max>4000</max>
+            </action>
+            <!-- Title or something -->
+            <action type="collect">
+                <tag value="h1">
+                    <class>it-ttl</class>
+                </tag>
+            </action>
+            <!-- Price: -->
+            <action type="collect">
+                <tag value="span">
+                    <class>notranslate</class>
+                    <id>prcIsum</id>
+                </tag>
+            </action>
+            <!-- Item condition: -->
+            <action type="collect">
+                <tag value="div">
+                    <class>u-flL condText  </class>
+                    <id>vi-itm-cond</id>
+                </tag>
+            </action>
+            <!-- Shipping: -->
+            <action type="collect">
+                <tag value="span">
+                    <id>shSummary</id>
+                </tag>
+            </action>
+            <!-- Item location: -->
+            <!-- Has a ' instead of a " so it doesn't do any match -->
+            <action type="collect">
+                <tag value="span">
+                    <!-- Double quotes are used by default -->
+                    <itemprop quote_type="single">availableAtOrFrom</itemprop>
+                </tag>
+            </action>
+            <!-- Ships to: -->
+            <action type="collect">
+                <tag value="span">
+                    <itemprop>areaServed</itemprop>
+                </tag>
+            </action>
+            <!-- Watchers: -->
+            <action type="collect">
+                <tag value="span">
+                    <id>vi-bybox-watchers</id>
+                </tag>
+            </action>
+            <action type="navigate" where="back"/>
+            <action type="wait">
+                <min>3999</min>
+                <max>4000</max>
+            </action>
+        </rule>
+        <rule name="navigate_to_rule">
+            <action type="navigate">
+                <tag value="a">
+                    <class>gspr next</class>
+                    <aria-label>Next page of results</aria-label>
+                </tag>
+            </action>
+        </rule>
+    </automaton>
+</scraper>

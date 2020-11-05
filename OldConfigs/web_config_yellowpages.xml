@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<scraper>
+    <settings>
+        <!-- The properties of the job -->
+        <name>YellowPages scraper</name>
+        <address>http://www.yellowpages.com</address>
+        <start>http://www.yellowpages.com/search?search_terms=supermarket&amp;geo_location_terms=Washington%2C%20DC&amp;page=20</start>
+        <output>
+            <save>yellowpages.csv</save>
+        </output>
+    </settings>
+    <automaton>
+        <rule name="collect_rule" isRepeatable="true" isProcessable="true">
+            <action type="collect" isRepeatCondition="true" isMultiCollect="false">
+                <!-- The type of the tag to be collected that shall be identified using the given class -->
+                <tag value="a">
+                    <class>business-name</class>
+                </tag>
+            </action>
+            <action type="navigate">
+                <tag value="a">
+                    <class>business-name</class>
+                </tag>
+            </action>
+            <action type="wait">
+                <!-- The time to wait shall be generated as a random value between the <min> and <max> values -->
+                <min>2999</min>
+                <max>5000</max>
+            </action>
+            <action type="collect">
+                <tag value="p">
+                    <class>phone</class>
+                </tag>
+            </action>
+             <action type="collect">
+                <tag value="p">
+                    <itemprop>streetAddress</itemprop>
+                    <class>street-address</class>
+                </tag>
+            </action>
+            <action type="navigate" where="back"/>
+            <action type="wait">
+                <min>3999</min>
+                <max>5000</max>
+            </action>
+        </rule>
+        <rule name="navigate_to_rule">
+            <action type="navigate">
+                <tag value="a">
+                    <class>next ajax-page</class>
+                </tag>
+            </action>
+        </rule>
+    </automaton>
+</scraper>
