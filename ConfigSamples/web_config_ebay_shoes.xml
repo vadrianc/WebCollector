@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<scraper>
+    <settings>
+        <!-- The properties of the job -->
+        <name>Ebay scraper</name>
+        <address>https://www.ebay.com</address>
+        <start>https://www.ebay.com/sch/i.html?_from&#61;R40&#38;_trksid&#61;p2380057.m570.l1313&#38;_nkw&#61;shoes&#38;_sacat&#61;0</start>
+        <output>
+            <save>ebay.csv</save>
+        </output>
+    </settings>
+    <automaton>
+        <rule name="collect_rule" isRepeatable="true" isProcessable="true">
+            <action type="collect"  isRepeatCondition="true" isMultiCollect="false">
+                <tag value="h3">
+                    <class>s-item__title s-item__title--has-tags</class>
+                </tag>
+            </action>
+            <action type="navigate">
+                <tag value="a">
+                    <class quote_type="NoQuote">s-item__link</class>
+                </tag>
+            </action>
+            <action type="wait">
+                <!-- The time to wait shall be generated as a random value between the <min> and <max> values -->
+                <min>3000</min>
+                <max>5000</max>
+            </action>
+            <!-- Price -->
+            <action type="collect">
+                <tag value="span">
+                    <id>prcIsum</id>
+                </tag>
+            </action>
+            <action type="navigate" where="back"/>
+            <action type="wait">
+                <min>3000</min>
+                <max>5000</max>
+            </action>
+        </rule>
+    </automaton>
+</scraper>
