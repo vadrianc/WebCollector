@@ -14,6 +14,7 @@
         {
             Name = name;
             Value = value;
+            Delimiter = AttributeDelimiter.DoubleQuote;
         }
 
         /// <summary>
@@ -21,12 +22,13 @@
         /// </summary>
         /// <param name="name">The name of the attribute.</param>
         /// <param name="value">The value of the attribute.</param>
-        /// <param name="isSingleQuote">Flag indicating if single quotes or double quotes are to used.</param>
-        public TagAttribute(string name, string value, bool isSingleQuote)
+        /// <param name="delimiter">Flag indicating if the attribute value is single or double
+        /// quoted or no quote is present.</param>
+        public TagAttribute(string name, string value, AttributeDelimiter delimiter)
         {
             Name = name;
             Value = value;
-            IsSingleQuote = isSingleQuote;
+            Delimiter = delimiter;
         }
 
         /// <summary>
@@ -48,12 +50,9 @@
         }
 
         /// <summary>
-        /// Get or set if the attribute is value is single or double quoted.
+        /// Get or set if the attribute value is single or double quoted or no quote is present.
         /// </summary>
-        /// <value>
-        /// True if single quotes shall be used, false if double quotes shall be used.
-        /// </value>
-        public bool IsSingleQuote
+        public AttributeDelimiter Delimiter
         {
             get;
             private set;

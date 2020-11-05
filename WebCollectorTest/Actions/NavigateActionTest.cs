@@ -72,7 +72,7 @@
             Assert.That(action.Attributes.Count, Is.EqualTo(1));
             Assert.That(action.Attributes[0].Name, Is.EqualTo("class"));
             Assert.That(action.Attributes[0].Value, Is.EqualTo("next ajax-page"));
-            Assert.That(action.Attributes[0].IsSingleQuote, Is.False);
+            Assert.That(action.Attributes[0].Delimiter, Is.EqualTo(AttributeDelimiter.DoubleQuote));
             Assert.That(action.Where, Is.Null);
             Assert.That(action.Session, Is.EqualTo(session));
             Assert.That(action.Name, Is.Null);
@@ -85,7 +85,7 @@
             Assert.That(action.Attributes.Count, Is.EqualTo(1));
             Assert.That(action.Attributes[0].Name, Is.EqualTo("class"));
             Assert.That(action.Attributes[0].Value, Is.EqualTo("next ajax-page"));
-            Assert.That(action.Attributes[0].IsSingleQuote, Is.False);
+            Assert.That(action.Attributes[0].Delimiter, Is.EqualTo(AttributeDelimiter.DoubleQuote));
             Assert.That(action.Where, Is.Null);
             Assert.That(action.Session, Is.EqualTo(session));
             Assert.That(action.Name, Is.Null);

@@ -146,8 +146,10 @@
                 }
 
                 if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value)) {
-                    bool isSingleQuote = quote_type == null ? false : quote_type.Equals("single");
-                    TagAttribute tagAttribute = new TagAttribute(key, value, isSingleQuote);
+                    AttributeDelimiter delimiter = string.IsNullOrEmpty(quote_type) ?
+                        AttributeDelimiter.DoubleQuote :
+                        (AttributeDelimiter)Enum.Parse(typeof(AttributeDelimiter), quote_type);
+                    TagAttribute tagAttribute = new TagAttribute(key, value, delimiter);
                     properties.Add(tagAttribute);
                     key = null;
                     value = null;

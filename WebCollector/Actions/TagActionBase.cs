@@ -137,19 +137,9 @@
                 patternBuilder.Append(attribute.Name);
                 patternBuilder.Append('=');
 
-                if (attribute.IsSingleQuote) {
-                    patternBuilder.Append('\'');
-                } else {
-                    patternBuilder.Append('\"');
-                }
-
+                Quote(attribute, patternBuilder);
                 patternBuilder.Append(attribute.Value);
-
-                if (attribute.IsSingleQuote) {
-                    patternBuilder.Append('\'');
-                } else {
-                    patternBuilder.Append('\"');
-                }
+                Quote(attribute, patternBuilder);
 
                 patternBuilder.Append("[^<]*>");
 
@@ -164,6 +154,19 @@
             }
 
             return patterns;
+        }
+
+        private void Quote(TagAttribute attribute, StringBuilder patternBuilder)
+        {
+            switch (attribute.Delimiter)
+            {
+                case AttributeDelimiter.SingleQuote:
+                    patternBuilder.Append('\'');
+                    break;
+                case AttributeDelimiter.DoubleQuote:
+                    patternBuilder.Append('\"');
+                    break;
+            }
         }
 
         /// <summary>

@@ -46,6 +46,7 @@
     <Compile Include="Actions\Collect\TagCollectAction.cs" />
     <Compile Include="Actions\Collect\ItemBase.cs" />
     <Compile Include="Actions\Collect\TextItem.cs" />
+    <Compile Include="Actions\AttributeDelimiter.cs" />
     <Compile Include="Actions\Navigate\BrowsingTracker.cs" />
     <Compile Include="Actions\Navigate\NavigateAction.cs" />
     <Compile Include="Actions\TagActionBase.cs" />

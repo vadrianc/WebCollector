@@ -12,7 +12,7 @@
     /// </summary>
     public class NavigateAction : TagActionBase, INavigateAction
     {
-        private static Regex s_HrefRegex = new Regex("href=\"[^\"]+\"");
+        private static Regex s_HrefRegex = new Regex("(href=\"[^\"]+\")|(href='[^']+')|(href=[^>]+>)");
 
         private int m_CurrentIndex;
 
@@ -89,7 +89,7 @@
             if (!match.Success) return false;
 
             Link = match.Value.Replace("href=", string.Empty);
-            Link = Link.Replace("\"", string.Empty);
+            Link = Link.Replace("\"", string.Empty).Replace("'", string.Empty).Replace(">", string.Empty);
 
             if (!Link.StartsWith(Session.Address)) Link = Session.Address + Link;
             if (Link.Contains("&amp;")) Link = Link.Replace("&amp;", "&");
